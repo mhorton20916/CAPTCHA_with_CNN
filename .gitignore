@@ -2,4 +2,12 @@
 
 samples.zip
 
-*/.ipynb_checkpoints/
+
+#Jupyter checkpoints
+.ipynb_checkpoints
+
+#Config files
+*config.*
+
+#pycache
+*.pyc
