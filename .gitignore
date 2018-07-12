@@ -1,10 +1,6 @@
-*/samples/*
 
-samples.zip
-
-
-*/samples/*
-*/grainy_samples/*
+samples/*
+grainy_samples/*
 #Jupyter checkpoints
 .ipynb_checkpoints
 
