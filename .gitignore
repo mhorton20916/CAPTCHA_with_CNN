@@ -1,6 +1,8 @@
 
 samples/*
 grainy_samples/*
+models/*
+
 #Jupyter checkpoints
 .ipynb_checkpoints
 
