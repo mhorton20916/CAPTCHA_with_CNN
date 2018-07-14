@@ -20,136 +20,15 @@ from random import choices
 import matplotlib.pyplot as plt
 ```
 
-
-```python
-data = []
-labels = []
-count = 0
-for letter_path in paths.list_images('grainy_samples/letters'):
-    image = cv2.imread(letter_path,0)
+    Using TensorFlow backend.
     
-    # Resize image
-    image = normalize_image_size(image,20,20)
-
-    
-    image = np.expand_dims(image, axis = 2)
-    data.append(image)
-    labels.append(letter_path.split(os.path.sep)[-2])
-    count+=1
-    if count%2000==0:
-        print('Added image #%d'%count)
-
-```
-
-    Added image #2000
-    Added image #4000
-    Added image #6000
-    Added image #8000
-    Added image #10000
-    Added image #12000
-    Added image #14000
-    Added image #16000
-    Added image #18000
-    Added image #20000
-    Added image #22000
-    Added image #24000
-    Added image #26000
-    Added image #28000
-    Added image #30000
-    Added image #32000
-    Added image #34000
-    Added image #36000
-    Added image #38000
-    Added image #40000
-    Added image #42000
-    Added image #44000
-    Added image #46000
-    Added image #48000
-    Added image #50000
-    Added image #52000
-    Added image #54000
-    Added image #56000
-    Added image #58000
-    Added image #60000
-    Added image #62000
-    Added image #64000
-    Added image #66000
-    Added image #68000
-    Added image #70000
-    Added image #72000
-    Added image #74000
-    Added image #76000
-    Added image #78000
-    Added image #80000
-    Added image #82000
-    Added image #84000
-    Added image #86000
-    Added image #88000
-    Added image #90000
-    Added image #92000
-    Added image #94000
-    
-
-
-```python
-data = np.array(data,dtype='float')/255.0
-labels = np.array(labels)
-```
-
-
-```python
-X_train, X_test, y_train, y_test = train_test_split(data,labels, test_size=0.25)
-```
-
-
-```python
-lb = LabelBinarizer().fit(y_train)
-y_train = lb.transform(y_train)
-y_test = lb.transform(y_test)
-```
-
-
-```python
-model = Sequential()
-model.add(Conv2D(10, (5, 5), padding="same", input_shape=(20, 20, 1), activation="relu"))
-model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
-model.add(Conv2D(40, (5, 5), padding="same", activation="relu"))
-model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
-model.add(Flatten())
-model.add(Dense(512, activation="relu"))
-model.add(Dense(19, activation="softmax"))
-model.compile(loss="categorical_crossentropy", optimizer="adam", metrics=["accuracy"])
-model.fit(X_train, y_train, validation_data=(X_test, y_test), batch_size=19, epochs=2, verbose=1)
-```
-
-    Train on 71238 samples, validate on 23746 samples
-    Epoch 1/2
-    71238/71238 [==============================] - 102s 1ms/step - loss: 0.1771 - acc: 0.9529 - val_loss: 0.0593 - val_acc: 0.9846
-    Epoch 2/2
-    71238/71238 [==============================] - 115s 2ms/step - loss: 0.0481 - acc: 0.9870 - val_loss: 0.0553 - val_acc: 0.9864
-    
-
-
-
-
-    <keras.callbacks.History at 0x1bda8327be0>
-
-
-
-
-```python
-model.save('models/ideal/ideal.h5')
-
-with open('models/ideal/model_label_map.dat','wb') as f:
-    pickle.dump(lb,f)
-```
 
 
 ```python
 from keras.models import load_model
-model = load_model('models/ideal/ideal.h5')
+model = load_model('ideal/ideal.h5')
 
-with open('models/ideal/model_label_map.dat','rb') as f:
+with open('ideal/model_label_map.dat','rb') as f:
     lb = pickle.load(f)
 ```
 
@@ -290,6 +169,7 @@ for i in range(100):
 
 
 ```python
+total_letters = 6000
 total_errors = sum(errors_matrix)
 total_errors
 ```
@@ -297,14 +177,9 @@ total_errors
 
 
 
-    191
+    201
 
 
-
-
-```python
-total_letters = 6000
-```
 
 
 ```python
@@ -315,7 +190,7 @@ perc_error
 
 
 
-    3.183333333333333
+    3.35
 
 
 
@@ -328,7 +203,7 @@ perc_accuracy
 
 
 
-    96.81666666666666
+    96.65
 
 
 
@@ -341,11 +216,11 @@ hypothetical_success_by_image
 
 
 
-    82.35704518396281
+    81.51004824408923
 
 
 
-# Selected Examples:
+# Selected Examples
 
 
 ```python
@@ -415,62 +290,62 @@ df
   <tbody>
     <tr>
       <th>0</th>
-      <td>zwudux</td>
-      <td>zwudux</td>
+      <td>gxozcc</td>
+      <td>gxozcc</td>
       <td>0</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>hhzxnw</td>
-      <td>hhzxnw</td>
+      <td>nphxvn</td>
+      <td>nphxvn</td>
       <td>0</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>qxhece</td>
-      <td>qxhece</td>
-      <td>0</td>
+      <td>keezhu</td>
+      <td>koezhu</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>cqeddw</td>
-      <td>cqeddw</td>
+      <td>euhybv</td>
+      <td>euhybv</td>
       <td>0</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>geacgo</td>
-      <td>geocgo</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>kcnncp</td>
-      <td>kcnncp</td>
+      <td>akpvgo</td>
+      <td>akpvgo</td>
       <td>0</td>
     </tr>
     <tr>
+      <th>5</th>
+      <td>ynuazu</td>
+      <td>youszu</td>
+      <td>2</td>
+    </tr>
+    <tr>
       <th>6</th>
-      <td>ngpncq</td>
-      <td>ngpncq</td>
+      <td>sdvxbn</td>
+      <td>sdvxbn</td>
       <td>0</td>
     </tr>
     <tr>
       <th>7</th>
-      <td>ogopaz</td>
-      <td>ogopaz</td>
+      <td>kwyyge</td>
+      <td>kwyyge</td>
       <td>0</td>
     </tr>
     <tr>
       <th>8</th>
-      <td>ycoxup</td>
-      <td>ycoxup</td>
+      <td>besgnz</td>
+      <td>besgnz</td>
       <td>0</td>
     </tr>
     <tr>
       <th>9</th>
-      <td>gqdpdk</td>
-      <td>gqdpdk</td>
+      <td>nbpxzv</td>
+      <td>nbpxzv</td>
       <td>0</td>
     </tr>
   </tbody>
